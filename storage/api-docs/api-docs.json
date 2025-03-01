@@ -1,0 +1,391 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Formation",
+        "description": "Documentation of API Formation",
+        "contact": {
+            "email": "support@example.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/projets": {
+            "post": {
+                "tags": [
+                    "Projets"
+                ],
+                "summary": "Create a new project",
+                "description": "Store a newly created resource in storage.",
+                "operationId": "b09251428bbf1995144e555a6db447ae",
+                "requestBody": {
+                    "description": "Project data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "intitule",
+                                    "dateDebut",
+                                    "dateFin",
+                                    "duree"
+                                ],
+                                "properties": {
+                                    "intitule": {
+                                        "type": "string"
+                                    },
+                                    "dateDebut": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "dateFin": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "duree": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Project created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Projet"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/projets/{id}": {
+            "get": {
+                "tags": [
+                    "Projets"
+                ],
+                "summary": "Get project by ID",
+                "description": "Display the specified resource.",
+                "operationId": "c12153e49ba7b2785975d94224588a62",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Projet"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Projets"
+                ],
+                "summary": "Update project details",
+                "description": "Update the specified resource in storage.",
+                "operationId": "f93c637a8568fe1980bc6bde69679dca",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Updated project data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "intitule",
+                                    "dateDebut",
+                                    "dateFin",
+                                    "duree"
+                                ],
+                                "properties": {
+                                    "intitule": {
+                                        "type": "string"
+                                    },
+                                    "dateDebut": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "dateFin": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "duree": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Project updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Projet"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Projets"
+                ],
+                "summary": "Delete project",
+                "description": "Remove the specified resource from storage.",
+                "operationId": "d880737fcbd65754b670b8e357c18c12",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project deleted successfully"
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    }
+                }
+            }
+        },
+        "/api/projets/{id}/personnes": {
+            "get": {
+                "tags": [
+                    "Projets"
+                ],
+                "summary": "Get persons related to a project",
+                "description": "Get project related persons",
+                "operationId": "b26f29d85ec17cead41a060d60b6f466",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Project ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of persons related to the project",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Personne"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    }
+                }
+            }
+        },
+        "/api/projets/closed": {
+            "get": {
+                "tags": [
+                    "Projets"
+                ],
+                "summary": "Get closed projects",
+                "description": "Get closed projects",
+                "operationId": "7d8479d95f24736197e2cc54a1a70095",
+                "responses": {
+                    "200": {
+                        "description": "List of closed projects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Projet"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/projets/late": {
+            "get": {
+                "tags": [
+                    "Projets"
+                ],
+                "summary": "Get late projects",
+                "description": "Get late projects",
+                "operationId": "cce0d1dfc7ff0419339600e00064b77e",
+                "responses": {
+                    "200": {
+                        "description": "List of late projects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Projet"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/projets/closed-with-late": {
+            "get": {
+                "tags": [
+                    "Projets"
+                ],
+                "summary": "Get closed projects with delays",
+                "description": "Get closed projects with delays",
+                "operationId": "acbaa24f28ff0f2fda70e88ffbd445f8",
+                "responses": {
+                    "200": {
+                        "description": "List of closed projects with delays",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Projet"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Personne": {
+                "title": "Personne",
+                "description": "Modèle de données pour une personne",
+                "required": [
+                    "id",
+                    "nom",
+                    "prenom",
+                    "email"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Dupont"
+                    },
+                    "prenom": {
+                        "type": "string",
+                        "example": "Jean"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "jean@example.com"
+                    },
+                    "tele": {
+                        "type": "string",
+                        "example": "0612345678"
+                    }
+                },
+                "type": "object"
+            },
+            "Projet": {
+                "title": "Projet",
+                "description": "Modèle de données pour un projet",
+                "required": [
+                    "intitule",
+                    "dateDebut",
+                    "dateFin",
+                    "duree"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "intitule": {
+                        "type": "string",
+                        "example": "Project A"
+                    },
+                    "dateDebut": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-01-01"
+                    },
+                    "dateFin": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-06-30"
+                    },
+                    "duree": {
+                        "type": "integer",
+                        "example": 180
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Projets",
+            "description": "Operations related to projects"
+        }
+    ]
+}
